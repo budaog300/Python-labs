@@ -1,0 +1,83 @@
+import os
+import json
+import csv
+
+
+directory = "E:\!!!\Pythonlabs\data.csv"
+data = {}
+
+
+def count(path):
+    files = [file for file in os.listdir(path) if os.path.isfile(f'{path}/{file}')]
+    print(len(files))
+
+
+def parse_csv(directory):
+    with open(directory) as file:
+        lines = file.read().splitlines()
+        # raw_csv = csv.reader(directory, delimiter=',', quotechar=',', quoting=csv.QUOTE_MINIMAL)
+        for line in lines:
+            (idx, fio, fiov, reason, time) = line.split('\t')
+            data.update({int(idx): {"ФИО":fio, "ФИО врача": fiov, "причина обращения": reason, "длительность": int(time)}})
+    return data
+
+
+def print_data(f, dict, fio, fiov, reason, time):
+    for k, v in list(dict.items()):
+        f.write(f"№{k}; ФИО: {v['ФИО']}; ФИО врача: {v['ФИО врача']}; причина обращения: {v['причина обращения']}; длительность: {v['длительность']}\n")
+    f.write(f"№{len(dict) + 1}; ФИО: {fio}; ФИО врача: {fiov}; причина обращения: {reason}; длительность: {time}\n")
+    dict.update({len(dict) + 1: {'ФИО': fio, 'ФИО врача': fiov, 'причина обращения': reason, 'длительность': time}})
+
+
+def sorted_by_str(data) -> dict:
+    return dict(sorted(data.items(), key=lambda x: x[1]["ФИО"], reverse=False))
+
+
+def sorted_by_number(data) -> dict:
+    return dict(sorted(data.items(), key=lambda x: x[1]["длительность"], reverse=False))
+
+
+def sorted_dif(data, value) -> dict:
+    return dict((k,v) for k,v in data.items() if v["причина обращения"] == value)
+
+
+def write_to_file():
+    # field_names = ['ФИО', 'ФИО врача', 'причина обращения', 'длительность']
+    map = parse_csv(directory)
+    # f = open("E:\!!!\Pythonlabs\yet.csv", "w")
+    with open("E:\!!!\Pythonlabs\yet.csv", "w") as f:
+        print_data(f, map, 'Барыбин Андрей Андреевич', 'Ефремов Константин Сергеевич', 'Аппендицит', 2)
+    # f.close()
+        # writer = csv.writer(f)
+        # for line in map:
+        #     writer.writerows(str(map))
+            # f.write("%s, %s\n" %(k, map[k]))
+        # writer = csv.DictWriter(f, fieldnames=field_names)
+        # writer.writeheader()
+        # writer.writerows(map)
+        # f.write(str(map))
+    with open('E:\!!!\Pythonlabs\yet.csv') as f:
+        print(f.read())
+
+
+if __name__ == '__main__':
+    path = "E:\!!!\Pythonlabs\Лабораторные работы"
+    # b = False
+    # print('Словарь "История посещений поликлиники":')
+    # for k, v in parse_csv(directory).items():
+    #     print(k,v)
+    # print('\n')
+    # print('Сортировка по строковому полю:')
+    # for k, v in sorted_by_str(parse_csv(directory)).items():
+    #      print(k,v)
+    # print('\n')
+    # print('Сортировка по числовому полю:')
+    # for k, v in sorted_by_number(parse_csv(directory)).items():
+    #     print(k,v)
+    # print('\n')
+    # for k, v in sorted_dif(parse_csv(directory), 'ОРВИ').items():
+    #     print('Сортировка по критерию:')
+    #     print(k, v)
+
+    # write_to_file()
+    count(path)
