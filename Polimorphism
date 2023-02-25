@@ -7,7 +7,7 @@ class Dog:
         return self.legs
 
     def info(self):
-        print(f'My name is {self.name} and I have got {self.legs}')
+        print(f'My name is {self.name} and I have got {self.legs} legs')
 
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class Hen:
         return self.legs
 
     def info(self):
-        print(f'My name is {self.name} and I have got {self.legs}')
+        print(f'My name is {self.name} and I have got {self.legs} legs')
 
     def __str__(self):
         return self.name
