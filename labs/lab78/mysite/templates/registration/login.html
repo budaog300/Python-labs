@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Авторизация</h1>
+{% if form.errors %}
+<p>Ваш логин или пароль был введён неправильно, попробуйте ещё раз.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Ваш акаунт не имеет доступа к данной странице.</p>
+{% else %}
+<p>Пожалуйста войдите, чтобы увидеть эту страницу</p>
+{% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {{ form.password.label_tag }}
+    {{ form.password }}
+    <div class="buts">
+        <button class="btn" type="submit">Войти</button>
+        <p><a class="btn" href="{% url 'register' %}">Зарегистрироваться</a></p>
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </div>
+</form>
+
+{% endblock %}
