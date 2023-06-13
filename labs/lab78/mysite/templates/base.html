@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="/" class="navbar-link">Главная</a>
+    <ul class="navbar-links">
+        <li><a class="navbar-link" href="/doctors">Врачи</a></li>
+        <li><a class="navbar-link" href="/hospitals">Поликлиники</a></li>
+
+        {% if request.user.is_authenticated %}
+        <li><a class="navbar-link" href="/patients">Пациенты</a></li>
+        <li><a class="navbar-link" href="/duration">Длительность</a></li>
+        <li><a class="navbar-link" href="/reason">Причины обращения</a></li>
+
+        <li><a class="navbar-link" href="/accounts/logout">Выход</a></li>
+        {% else %}
+        <li><a class="navbar-link" href="/accounts/login">Логин</a></li>
+        <li><a class="navbar-link" href="/register">Регистрация</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="container">
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>
